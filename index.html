@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-<canvas id="canvas" width="400" height="400"></canvas>
+<canvas id="canvas" width="600" height="600"></canvas>
 <script type="importmap">
     {
         "imports":{
@@ -41,22 +41,29 @@
     renderer.outputEncoding = THREE.sRGBEncoding
 
     // Camera (perspective)
-    let camera = new THREE.PerspectiveCamera(30,1)
+    let camera = new THREE.PerspectiveCamera(45,1)
     camera.position.set(0,0,5)
 
     // Background
-    scene.background = new THREE.Color('transparent')
+    scene.background = new THREE.Color('white')
 
     // Light
-    // let light = new THREE.DirectionalLight(0xffffff, 0.5 )
-    // scene.add(light)
+    let light = new THREE.DirectionalLight(0xffffff, 0.5)
+    scene.add(light)
 
     // Load glTF
     let loader = new GLTFLoader()
     loader.load('shiba/scene.gltf',function(gltf){
         scene.add(gltf.scene)
-        renderer.render(scene, camera)
+        // Animation
+        function animate(){
+            requestAnimationFrame(animate)
+            gltf.scene.rotation.y -= 0.03
+            renderer.render(scene,camera)
+        }
+        animate()
     })
+
 </script>
 </body>
 </html>
